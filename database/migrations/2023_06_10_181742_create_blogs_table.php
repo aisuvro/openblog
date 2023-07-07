@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug', 250)->index()->unique()->nullable();
             $table->longText('description')->nullable();
             $table->string('featured_image', 150)->nullable()->default('no-image.png');
+            $table->string('image_caption',150)->nullable()->default('No caption');
             $table->string('is_published')->default('true');
             $table->timestamps();
         });

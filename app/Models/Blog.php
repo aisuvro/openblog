@@ -19,6 +19,7 @@ class Blog extends Model
         'slug',
         'description',
         'featured_image',
+        'image_caption',
         'is_published',
     ];
 
