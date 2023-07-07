@@ -19,7 +19,8 @@
     @forelse ($blogs as $blog)
         <div class="w-full lg:w-3/5  sm:w-ful mx-auto">
             <div class="mx-5 my-3 text-sm">
-                <a href="" class=" text-red-600 font-bold tracking-widest">CORONAVIRUS</a>
+                <a href=""
+                    class=" text-red-600 font-bold tracking-widest">{{ optional($blog?->ChildCategories)[0]?->title }}</a>
             </div>
             <div class="w-full text-gray-800 text-4xl px-5 font-bold leading-none">
                 {{ $blog->title }}

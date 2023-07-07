@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Blog extends Model
 {
@@ -22,6 +23,11 @@ class Blog extends Model
         'image_caption',
         'is_published',
     ];
+
+    public function ChildCategories():BelongsToMany
+    {
+        return $this->belongsToMany(ChildCategory::class);
+    }
 
     /**
      * The attributes that should be cast to native types.

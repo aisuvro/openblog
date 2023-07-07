@@ -10,12 +10,17 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\BlogResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BlogResource\RelationManagers;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\ToggleColumn;
+use Filament\Forms\Components\Select;
 
 class BlogResource extends Resource
 {
@@ -27,24 +32,41 @@ class BlogResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
-                    ->schema([
-                        Forms\Components\FileUpload::make('featured_image')
-                            ->image(),
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->maxLength(250)
-                            ->reactive()
-                            ->afterStateUpdated(fn(callable $set, $state) => $set('slug', Str::slug($state))),
-                        Forms\Components\TextInput::make('slug')
-                            ->maxLength(250)
-                            ->reactive(),
-                        Forms\Components\Textarea::make('description'),
-                    ]),
+                Grid::make(6)
+                ->schema([
                     Card::make()
                         ->schema([
-                            Toggle::make('is_published')
+                            FileUpload::make('featured_image')
+                                ->image(),
+                            TextInput::make('image_caption')
+                                ->maxLength(250),
+                            TextInput::make('title')
+                                ->required()
+                                ->maxLength(250)
+                                ->reactive()
+                                ->afterStateUpdated(fn(callable $set, $state) => $set('slug', Str::slug($state))),
+                            TextInput::make('slug')
+                                ->maxLength(250)
+                                ->reactive(),
+                            Textarea::make('description'),
                         ])
+                        ->columnSpan(4),
+
+                        Grid::make()
+                            ->schema([
+                                Card::make()
+                                    ->schema([
+                                        Toggle::make('is_published')
+                                    ]),
+                                Card::make()
+                                    ->schema([
+                                        Select::make('ChildCategories')
+                                            ->multiple()
+                                            ->relationship('ChildCategories', 'title')
+                                    ]),
+                            ])
+                            ->columnSpan(2),
+                ])
             ]);
     }
 
