@@ -2,7 +2,7 @@
 @section('content')
     <x-HeadingSection />
     @forelse ($blogs as $blog)
-        <div class="w-full lg:w-3/5  sm:w-ful mx-auto">
+        <div class="w-full lg:w-3/5  sm:w-ful mx-auto py-10 border-1 border-b">
             <div class="mx-5 my-3 text-sm">
                 <a href=""
                     class=" text-red-600 font-bold tracking-widest">{{ optional($blog?->ChildCategories)[0]?->title }}</a>
@@ -32,7 +32,7 @@
             </div>
 
             <div class="px-5 w-full mx-auto">
-                {!! $blog->description !!}
+                {!! $blog->short_description !!}
             </div>
         </div>
 

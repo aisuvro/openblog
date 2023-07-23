@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use App\Models\ChildCategory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Blog extends Model
@@ -23,6 +26,13 @@ class Blog extends Model
         'image_caption',
         'is_published',
     ];
+
+    public function ShortDescription():Attribute
+    {
+        return new Attribute(
+            get: fn() => substr($this->description, 0, 150)
+        );
+    }
 
     public function ChildCategories():BelongsToMany
     {
