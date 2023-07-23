@@ -2,6 +2,7 @@
 
 use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
+use RyanChandler\FilamentNavigation\Facades\FilamentNavigation;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $blogs = Blog::orderBy('id','desc')->paginate(5);
+
     return view('blog-list', compact('blogs'));
 });
+
+Route::get('/blog/{slug}', function ($slug) {
+    $blog = Blog::where('slug',$slug)->firstOrFail();
+    return view('blog-details', compact('blog'));
+})->name('blog.details');
